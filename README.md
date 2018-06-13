@@ -8,7 +8,7 @@ I put the data into a sqlite3 db. This makes it super easy to put online without
 
 I broke down the data into two models: Provider model and a Inpatient model. The provider model is the location of the hospital and includes information such as 
 
-```
+```python
 provider_id = models.IntegerField()
 name = models.CharField(max_length=1024)
 street_address = models.CharField(max_length=1024)
@@ -20,7 +20,7 @@ region_description = models.CharField(max_length=1024)
 
 The Inpatient model held the data about the specific DRG, and then referenced the provider as a foreign key.
 
-```
+```python
 provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
 drg = models.CharField(max_length=1024)
 total_discharges = models.IntegerField(default=0, db_index=True)
