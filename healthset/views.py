@@ -58,7 +58,7 @@ class InpatientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 max_avg_medicare_payments *= 100
     
             # NOTE: this will error if any of these values are greater than sys.maxsize
-            
+
             state = request_data.get('state', '')
 
             if state:
@@ -70,7 +70,7 @@ class InpatientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                     avg_medicare_payments__lte=max_avg_medicare_payments,
                     avg_medicare_payments__gte=min_avg_medicare_payments,
                     provider__state=state,
-                )
+                ).prefetch_related('provider')
             else:
                 inpatients = Inpatient.objects.filter(
                     total_discharges__lte=max_discharges,
@@ -79,7 +79,7 @@ class InpatientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                     avg_covered_charges__gte=min_avg_covered_charges,
                     avg_medicare_payments__lte=max_avg_medicare_payments,
                     avg_medicare_payments__gte=min_avg_medicare_payments,
-                )
+                ).prefetch_related('provider')
 
             page = self.paginate_queryset(inpatients)
             if page is not None:
