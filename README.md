@@ -35,7 +35,9 @@ Once we got the data into a db, it was easy to query & filter the data with djan
 
 I added Django Silk to debug the data calls and if you take a look at http://ec2-52-39-138-129.us-west-2.compute.amazonaws.com:8000/silk, you'll see that the max amount of queries made to the DB is 2: one for the Provider and one for the Inpatient. The slowdown is in serializing all the data. 
 
-I've default set the pagination to just be by page and it's default 20 items per page. The return looks like this:
+I've default set the pagination to just be by page and it's default 20 items per page. Currently the results are not ordered by anything, so the pagination can't guarantee the same order each time.
+
+The return looks like this:
 
 ```
 {
