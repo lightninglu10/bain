@@ -40,10 +40,11 @@ class InpatientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             max_discharges = request_data.get('max_discharges')
             min_discharges = request_data.get('min_discharges')
             
+            # Multiply these values by 100 because we are representing the number in cents.
             max_avg_covered_charges = request_data.get('max_average_covered_charges')
             if max_avg_covered_charges != sys.maxsize:
                 max_avg_covered_charges *= 100
-            
+
             min_avg_covered_charges = request_data.get('min_average_covered_charges')
             if min_avg_covered_charges != 0:
                 min_avg_covered_charges *= 100
@@ -55,6 +56,8 @@ class InpatientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             max_avg_medicare_payments = request_data.get('max_average_medicare_payments')
             if max_avg_medicare_payments != sys.maxsize:
                 max_avg_medicare_payments *= 100
+    
+            # NOTE: this will error if any of these values are greater than sys.maxsize
             
             state = request_data.get('state', '')
 

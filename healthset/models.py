@@ -27,6 +27,10 @@ class Provider(models.Model):
 class Inpatient(models.Model):
     """
     A specific inpatient
+    
+
+    NOTE, if the $$ amount is too big, then the cents will overflow
+
     @field provider -- The medical provider
     @field drg -- drg definition
     @field total_discharges -- total amount of discharges
